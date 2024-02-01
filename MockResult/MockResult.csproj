@@ -5,7 +5,7 @@
     <FileVersion></FileVersion>
     <AssemblyVersion></AssemblyVersion>
     <PackageIcon>avatar.png</PackageIcon>
-    <VersionPrefix>1.0.6</VersionPrefix>
+    <VersionPrefix>1.0.7</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,16 +1,30 @@
 # MockResult
 ## Introduce
+0. Until today,this toolkit does not recognize any interfaces and does not implement initialization of common interfaces. 
 1. This tool can automatically create generic classes and fill all property fields with random values.
 2. If the attribute has a default value, it is not filled in.for example, Boolean values,integers,DateTime.
 3. If the attribute type is a string, fill in the attribute name.
 
-
 ## Example
 
 ```
-var apple = MockConvert.NewObject<Apple>();
+MockConvert.SetLength(3); //Set default length for lists and arrays
 
-var example = MockConvert.NewObject<ExampleDemo>();
+MockConvert.SetDeep(4);//Set the recursion depth of the class to prevent infinite nesting
+
+var apple = MockConvert.NewObject<Apple>(); //OK
+
+var apples = MockConvert.NewObject<List<Apple>>(); //OK
+
+var appleArray = MockConvert.NewObject<Apple[]>(); //OK
+
+var example = MockConvert.NewObject<ExampleDemo>(); //OK
+
+var exampleDic = MockConvert.NewObject<Dictionary<ExampleDemo, Apple>>(); //OK
+
+var error = MockConvert.NewObject<IEnumerable<Apple>>(); //error is null
+
+var error2 = MockConvert.NewObject<IEnumerable<Apple>>(); //error is null
 
 public class Apple 
 {
@@ -50,3 +64,4 @@ The generated JSON string
 ```
 ### Functional iteration
 1.plan to use more reasonable padding values to fill your newly created classes and structures.
+2.Perhaps in the future, it can support initialization of common IEnumerable interfaces
