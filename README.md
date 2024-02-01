@@ -24,7 +24,7 @@ var exampleDic = MockConvert.NewObject<Dictionary<ExampleDemo, Apple>>(); //OK
 
 var error = MockConvert.NewObject<IEnumerable<Apple>>(); //error is null
 
-var error2 = MockConvert.NewObject<IEnumerable<Apple>>(); //error is null
+var error2 = MockConvert.NewObject<ICollection<Apple>>(); //error is null
 
 public class Apple 
 {
@@ -53,7 +53,7 @@ The generated JSON string
 
 ```
 {
-    "MaxNAME":"1111",
+    "OtherName":"OtherName",
     "Id":"56a62db5-627c-4cff-9761-7e4b97083014",
     "Name":"NAME",
     "Description":"DESCRIPTION"
