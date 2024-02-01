@@ -100,15 +100,9 @@ namespace MockResult
             else if (t.GUID == _nullableGenericGuid) return NewObject(Nullable.GetUnderlyingType(t),deep,memberInfo);
             else if (t.IsEnum)
             {
-                if (typeof(byte).IsAssignableFrom(t)) return Enum.ToObject(t, Extentions.RollByte(memberInfo));
-                if (typeof(sbyte).IsAssignableFrom(t)) return Enum.ToObject(t, Extentions.RollSByte(memberInfo));
-                if (typeof(short).IsAssignableFrom(t)) return Enum.ToObject(t, Extentions.RollShort(memberInfo));
-                if (typeof(ushort).IsAssignableFrom(t)) return Enum.ToObject(t, Extentions.RollUShort(memberInfo));
-                if (typeof(int).IsAssignableFrom(t)) return Enum.ToObject(t, Extentions.RollInt(memberInfo));
-                if (typeof(uint).IsAssignableFrom(t)) return Enum.ToObject(t, Extentions.RollUInt(memberInfo));
-                if (typeof(long).IsAssignableFrom(t)) return Enum.ToObject(t, Extentions.RollLong(memberInfo));
-                if (typeof(ulong).IsAssignableFrom(t)) return Enum.ToObject(t, Extentions.RollULong(memberInfo));
-                return 0;
+                var enumValues = Enum.GetValues(t);
+                if (enumValues.Length == 0) return 0;
+                return enumValues.GetValue(Extentions.Roll(0, enumValues.Length));
             }
             else if (t.IsArray)
             {
@@ -146,20 +140,18 @@ namespace MockResult
             else if (t.IsClass || t.IsAnsiClass)
             {
                 var construct = t.GetConstructors().OrderBy(x => x.GetParameters().Length).ToArray();
-                var argsTypes = construct.First().GetParameters();
                 object obj = null;
+                if (construct.Any())
+                {
+
+                    obj = Activator.CreateInstance(t, construct.First().GetParameters().Select(x => NewObject(x.ParameterType, deep + 1)).ToArray());
+                }
+                else
+                {
+                    obj = Activator.CreateInstance(t);
+                }
                 if (deep < DEEP)
                 {
-                    if (argsTypes.Any())
-                    {
-
-                        obj = Activator.CreateInstance(t, argsTypes.Select(x => NewObject(x.ParameterType, deep + 1)).ToArray());
-                    }
-                    else
-                    {
-                        obj = Activator.CreateInstance(t);
-                    }
-
                     var pps = t.GetProperties(BindingFlags.Public |BindingFlags.NonPublic
                         | BindingFlags.Instance
                         | BindingFlags.CreateInstance

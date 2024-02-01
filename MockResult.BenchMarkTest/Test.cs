@@ -92,4 +92,20 @@ namespace MockResult.BenchMarkTest
                 .ReverseMap();
         }
     }
+
+
+    public struct ExampleDemo
+    {
+        public byte P1 { get; set; }
+        public byte P2 { get; set; }
+        public byte P3 { get; set; }
+        public byte P4 { get; set; }
+        public DayType Day { get; set; }
+    }
+
+    public enum DayType :byte
+    {
+        HappyDay,
+        SadDay,
+    }
 }

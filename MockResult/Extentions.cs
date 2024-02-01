@@ -90,5 +90,10 @@ namespace MockResult
         {
             return new DateTimeOffset(RollDateTime());
         }
+
+        internal static int Roll(int minValue, int maxValue)
+        {
+            return _roll.Next(minValue, maxValue);
+        }
     }
 }

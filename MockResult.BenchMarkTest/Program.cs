@@ -2,7 +2,7 @@
 using BenchmarkDotNet.Running;
 using MockResult;
 using MockResult.BenchMarkTest;
+using System.Text.Json;
 
 Console.WriteLine("Begin Running");
 BenchmarkRunner.Run<Test>();
-Console.ReadKey();
